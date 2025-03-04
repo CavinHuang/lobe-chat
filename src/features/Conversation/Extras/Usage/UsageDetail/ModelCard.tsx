@@ -2,7 +2,7 @@ import { ModelIcon } from '@lobehub/icons';
 import { Icon, Tooltip } from '@lobehub/ui';
 import { Segmented } from 'antd';
 import { createStyles } from 'antd-style';
-import { ArrowDownToDot, ArrowUpFromDot, CircleFadingArrowUp } from 'lucide-react';
+import { ArrowDownToDot, ArrowUpFromDot, BookUp2Icon, CircleFadingArrowUp } from 'lucide-react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
@@ -43,6 +43,10 @@ const ModelCard = memo<ModelCardProps>(({ pricing, id, provider, displayName }) 
   const inputPrice = formatPriceByCurrency(pricing?.input, pricing?.currency as ModelPriceCurrency);
   const cachedInputPrice = formatPriceByCurrency(
     pricing?.cachedInput,
+    pricing?.currency as ModelPriceCurrency,
+  );
+  const writeCacheInputPrice = formatPriceByCurrency(
+    pricing?.writeCacheInput,
     pricing?.currency as ModelPriceCurrency,
   );
   const outputPrice = formatPriceByCurrency(
@@ -105,6 +109,18 @@ const ModelCard = memo<ModelCardProps>(({ pricing, id, provider, displayName }) 
                 <Flexbox gap={2} horizontal>
                   <Icon icon={CircleFadingArrowUp} />
                   {cachedInputPrice}
+                </Flexbox>
+              </Tooltip>
+            )}
+            {pricing?.writeCacheInput && (
+              <Tooltip
+                title={t('messages.modelCard.pricing.writeCacheInputTokens', {
+                  amount: writeCacheInputPrice,
+                })}
+              >
+                <Flexbox gap={2} horizontal>
+                  <Icon icon={BookUp2Icon} />
+                  {writeCacheInputPrice}
                 </Flexbox>
               </Tooltip>
             )}
